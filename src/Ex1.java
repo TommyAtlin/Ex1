@@ -137,21 +137,18 @@ public class Ex1 {
                 }
 
                 // Validate baseNum range
-                if (baseNum < 2 || baseNum > 16) {
-                    System.out.println("The input of the base is not valid. Enter a base between 2 and 16.");
-                    continue; // promot the user to type the base again
+                if (baseNum >= 2 && baseNum <= 16) {
+                    break; // Exit the loop immediately after valid base input
                 }
 
                 String sumInBase = int2Number(num1Value + num2Value, baseNum);
                 String prodInBase = int2Number(num1Value * num2Value, baseNum);
 
-                // Display the sum and product
-                System.out.println(num1 + " + " + num2 + " = " + sumInBase);
-                System.out.println(num1 + " * " + num2 + " = " + prodInBase);
-
-                // Create the valid representations of results for comparison
+                // Display the sum and product and create the valid representations of results for comparison
                 String sumAsNumber = sumInBase + "b" + baseNum; //
                 String prodAsNumber = prodInBase + "b" + baseNum; //
+                System.out.println(num1 + " + " + num2 + " = " + sumAsNumber);
+                System.out.println(num1 + " * " + num2 + " = " + prodAsNumber);
 
                 // State the array of numbers for comparison
                 String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
