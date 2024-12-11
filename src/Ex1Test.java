@@ -10,7 +10,7 @@ public class Ex1Test {
         int v = Ex1Main.number2Int(s2);
         assertEquals(v, 11);
 
-        String s10 = "1011bA";
+        String s10 = "1011bA"
         v = Ex1Main.number2Int(s10);
         s2 = Ex1Main.int2Number(v, 2);
         int v2 = Ex1Main.number2Int(s2);
