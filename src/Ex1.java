@@ -41,7 +41,7 @@ public class Ex1 {
 
             //Check the number value that it valid as the template
             if (digitChar >= '0' && digitChar <= '9') {
-                digitValue = digitChar;
+                digitValue = digitChar - '0'; // Subtracting The number by  0 equals to Subtracting it by 48, As the char stored with a different value because its type.
             } else if (digitChar >= 'A' && digitChar <= 'G') {
                 digitValue = digitChar - 'A' + 10;
             } else {
