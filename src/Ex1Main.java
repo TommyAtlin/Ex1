@@ -98,6 +98,10 @@ public class Ex1Main {
         return true;
     }
 
+    public static boolean equals(String num1, String num2) {
+        return number2Int(num1) == number2Int(num2);
+    }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
