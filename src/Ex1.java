@@ -1,164 +1,85 @@
-import java.util.Scanner;
-
+/**
+ * This class represents a simple solution for Ex1.
+ * As defined here: https://docs.google.com/document/d/1AJ9wtnL1qdEs4DAKqBlO1bXCM6r6GJ_J/r/edit/edit
+ * In this assignment, we will design a number formatting converter and calculator.
+ * In general, we will use Strings as numbers over basis of binary till Hexa.
+ * [2-16], 10-16 are represented by A,B,..G.
+ * The general representation of the numbers is as a String with the following format:
+ * <number><b><base> e.g., “135bA” (i.e., “135”, as 10 is the default base), “100111b2”, “12345b6”,”012b5”, “123bG”, “EFbG”.
+ * The following are NOT in the format (not a valid number):
+ * “b2”, “0b1”, “123b”, “1234b11”, “3b3”, “-3b5”, “3 b4”, “GbG”, "", null,
+ * You should implement the following static functions:
+ */
 public class Ex1 {
+        /**
+         * Convert the given number (num) to a decimal representation (as int).
+         * It the given number is not in a valid format returns -1.
+         * @param num a String representing a number in basis [2,16]
+         * @return
+         */
+        public static int number2Int(String num) {
+            int ans = -1;
+            // add your code here
 
-    // Convert the given number
-    public static int number2Int(String num) {
-        // If input is null, empty, or doesn't contain the character 'b', return -1 which indicates an invalid input
-        if (num == null || num.isEmpty() || !num.contains("b")) return -1;
+            ////////////////////
+            return ans;
+        }
+        /**
+         * This static function checks if the given String (g) is in a valid "number" format.
+         * @param a a String representing a number
+         * @return true iff the given String is in a number format
+         */
+        public static boolean isNumber(String a) {
+            boolean ans = true;
+            // add your code here
 
-        // Take the b index and separate b from the number
-        int baseIndex = num.indexOf('b');
-        String numberPart = num.substring(0, baseIndex); // Extract the number
-        String basePart = num.substring(baseIndex + 1); // Extract the base
-
-        // Validate the base part
-        if (basePart.length() != 1 || basePart.charAt(0) < '2' || basePart.charAt(0) > 'G') {
-            return -1; // Invalid base
+            ////////////////////
+            return ans;
         }
 
-        // Ensure the number part isn't empty
-        if (numberPart.isEmpty()) {
-            return -1;
+        /**
+         * Calculate the number representation (in basis base)
+         * of the given natural number (represented as an integer).
+         * If num<0 or base is not in [2,16] the function should return "" (the empty String).
+         * @param num the natural number (include 0).
+         * @param base the basis [2,16]
+         * @return a String representing a number (in base) equals to num, or an empty String (in case of wrong input).
+         */
+        public static String int2Number(int num, int base) {
+            String ans = "";
+            // add your code here
+
+            ////////////////////
+            return ans;
         }
 
-        int base = 0;
-        char baseChar = basePart.charAt(0);
-        // Determine the numerical base value ('2'-'9' or 'A'-'G')
-        if (baseChar >= '2' && baseChar <= '9') {
-            base = baseChar - '0';
-        } else if (baseChar >= 'A' && baseChar <= 'G') { // in this case the diff between G to A is the same as binary numbers
-            base = baseChar - 'A' + 10;
-        } else {
-            return -1; // Invalid base character
+        /**
+         * Checks if the two numbers have the same value.
+         * @param n1 first number
+         * @param n2 second number
+         * @return true iff the two numbers have the same values.
+         */
+        public static boolean equals(String n1, String n2) {
+            boolean ans = true;
+            // add your code here
+
+            ////////////////////
+            return ans;
         }
 
-        // Convert the number part into a decimal integer value
-        int result = 0;
-        for (int i = 0; i < numberPart.length(); i++) {
-            char digitChar = numberPart.charAt(i);
-            int digitValue = 0;
+        /**
+         * This static function search for the array index with the largest number (in value).
+         * In case there are more than one maximum - returns the first index.
+         * Note: you can assume that the array is not null and is not empty, yet it may contain null or none-valid numbers (with value -1).
+         * @param arr an array of numbers
+         * @return the index in the array in with the largest number (in value).
+         *
+         */
+        public static int maxIndex(String[] arr) {
+            int ans = 0;
+            // add your code here
 
-            // Check the number value that it is valid as per the template
-            if (digitChar >= '0' && digitChar <= '9') {
-                digitValue = digitChar - '0'; // Subtracting The number by 0 equals to Subtracting it by 48, as the char stored with a different value due to its type
-            } else if (digitChar >= 'A' && digitChar <= 'G') {
-                digitValue = digitChar - 'A' + 10;
-            } else {
-                return -1; // Invalid character in the number part
-            }
-
-            result = result * base + digitValue; // Calculate the result by converting to decimal
+            ////////////////////
+            return ans;
         }
-        return result;
-    }
-
-    // Convert the number to a given base between 2 and 16
-    public static String int2Number(int num, int base) {
-        // If invalid number or base, return an empty string
-        if (num < 0 || base < 2 || base > 16) return "";
-        return Integer.toString(num, base); // Usage of the Java Builtin converter
-    }
-
-    // Find the maximum value number from the number Array
-    public static int maxIndex(String[] arr) {
-        int maxIndex = -1; // Start with invalid index
-        int maxValue = Integer.MIN_VALUE; // Initialize maximum value
-
-        // Loop through the array to find the maximum value
-        for (int i = 0; i < arr.length; i++) {
-            int value = number2Int(arr[i]); // Convert string to integer value
-            if (value > maxValue) {
-                maxValue = value; // Update maximum value and index
-                maxIndex = i;
-            }
-        }
-
-        return maxIndex; // Return index of the maximum value
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter a string as number#1 (or \"quit\" to end the program): ");
-            String num1 = scanner.nextLine();
-            if (num1.equals("quit")) {
-                System.out.println("quitting now...");
-                break; // Exit loop if user types 'quit'
-            }
-
-            int num1Value = number2Int(num1);
-
-            // Check if the first input number is valid
-            if (num1Value == -1) {
-                System.out.println("num1 = " + num1 + " is not a valid number.");
-                continue; // Restart loop if invalid
-            }
-            System.out.println("num1 = " + num1 + " is valid with value: " + num1Value);
-
-            System.out.print("Enter a string as number#2 (or \"quit\" to end the program): ");
-            String num2 = scanner.nextLine();
-            if (num2.equals("quit")) {
-                System.out.println("quitting now...");
-                break; // Exit loop if user types 'quit'
-            }
-
-            int num2Value = number2Int(num2);
-
-            // Check if the second input number is valid
-            if (num2Value == -1) {
-                System.out.println("num2 = " + num2 + " is not a valid number.");
-                continue; // Restart loop if invalid
-            }
-            System.out.println("num2 = " + num2 + " is valid with value: " + num2Value);
-
-            // Exit if either of the numbers is invalid
-            if (num1Value == -1 || num2Value == -1) {
-                System.out.println("One or both numbers are invalid. Please check the format.");
-                continue; // Restart loop if either is invalid
-            }
-
-            // Ask the user for a base value
-            int baseNum = 0; // Declare baseNum outside the loop
-            while (true) {
-                System.out.print("Enter a base for output (between 2 and 16): ");
-                String baseInput = scanner.nextLine();
-
-                try {
-                    baseNum = Integer.parseInt(baseInput); // Convert input to integer
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a valid integer.");
-                    continue; // Prompt the user to type the base again
-                }
-
-                // Validate baseNum range
-                if (baseNum >= 2 && baseNum <= 16) {
-                    break; // Exit the loop if the base is valid
-                } else {
-                    System.out.println("Base must be between 2 and 16. Please try again.");
-                }
-            }
-
-// Convert sum and product to the chosen base after validation loop
-            String sumInBase = int2Number(num1Value + num2Value, baseNum);
-            String prodInBase = int2Number(num1Value * num2Value, baseNum);
-
-// Display the sum and product
-            System.out.println(num1 + " + " + num2 + " = " + sumInBase);
-            System.out.println(num1 + " * " + num2 + " = " + prodInBase);
-
-// Create valid representations of results for comparison
-            String sumAsNumber = sumInBase + "b" + baseNum;
-            String prodAsNumber = prodInBase + "b" + baseNum;
-
-// State the array of numbers for comparison
-            String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
-            int maxIndex = maxIndex(allNumbers); // Find the maximum number
-            System.out.println("Max number over " + String.join(", ", allNumbers) + " is: " + allNumbers[maxIndex]);
-
-
-            break; // Exit after the base conversion and comparison
-        }
-    }
 }
