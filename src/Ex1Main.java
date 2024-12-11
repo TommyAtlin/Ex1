@@ -5,10 +5,11 @@ public class Ex1Main {
     // Convert the given number
     public static int number2Int(String num) {
         // If input is null, empty, or doesn't contain the character 'b', return -1 which indicates an invalid input
-        if (num == null || num.isEmpty() || !num.contains("b")) return -1;
+        if (num == null || num.isEmpty()) return -1;
 
         // Take the b index and separate b from the number
         int baseIndex = num.indexOf('b');
+        if (baseIndex == -1) return Integer.parseInt(num);;
         String numberPart = num.substring(0, baseIndex); // Extract the number
         String basePart = num.substring(baseIndex + 1); // Extract the base
 
@@ -170,13 +171,14 @@ public class Ex1Main {
             String sumInBase = int2Number(num1Value + num2Value, baseNum);
             String prodInBase = int2Number(num1Value * num2Value, baseNum);
 
-// Display the sum and product
-            System.out.println(num1 + " + " + num2 + " = " + sumInBase);
-            System.out.println(num1 + " * " + num2 + " = " + prodInBase);
 
 // Create valid representations of results for comparison
             String sumAsNumber = sumInBase + "b" + baseNum;
             String prodAsNumber = prodInBase + "b" + baseNum;
+
+            // Display the sum and product
+            System.out.println(num1 + " + " + num2 + " = " + sumAsNumber);
+            System.out.println(num1 + " * " + num2 + " = " + prodAsNumber);
 
 // State the array of numbers for comparison
             String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
