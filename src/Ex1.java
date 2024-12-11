@@ -124,28 +124,41 @@ public class Ex1 {
             }
 
             // Ask the user for a base value
-            System.out.print("Enter a base for output (between 2 and 16): ");
-            int base = scanner.nextInt();
-            scanner.nextLine(); // Jump one line
+            // Ask the user for a base value
+            while (true) {
+                System.out.print("Enter a base for output (between 2 and 16): ");
+                String baseInput = scanner.nextLine(); //
+                int baseNum;
+                try {
+                    baseNum = Integer.parseInt(baseInput); // Convert input to integer
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input Please enter a valid integer.");
+                    continue; // promot the user to type the base again
+                }
 
-            // Calculate sum and product of the numbers in the provided base
-            String sumInBase = int2Number(num1Value + num2Value, base);
-            String prodInBase = int2Number(num1Value * num2Value, base);
+                // Validate baseNum range
+                if (baseNum < 2 || baseNum > 16) {
+                    System.out.println("The input of the base is not valid. Enter a base between 2 and 16.");
+                    continue; // promot the user to type the base again
+                }
 
-            // Display the  sum and product
-            System.out.println(num1 + " + " + num2 + " = " + sumInBase);
-            System.out.println(num1 + " * " + num2 + " = " + prodInBase);
+                String sumInBase = int2Number(num1Value + num2Value, baseNum);
+                String prodInBase = int2Number(num1Value * num2Value, baseNum);
 
-            // Create the valid representations of results for comparison
-            String sumAsNumber = sumInBase + "b" + base;
-            String prodAsNumber = prodInBase + "b" + base;
+                // Display the sum and product
+                System.out.println(num1 + " + " + num2 + " = " + sumInBase);
+                System.out.println(num1 + " * " + num2 + " = " + prodInBase);
 
-            // State the Array of numbers for comparison
-            String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
-            int maxIndex = maxIndex(allNumbers); // Find the maximum number
-            System.out.println("Max number over " + String.join(", ", allNumbers) + " is: " + allNumbers[maxIndex]);
+                // Create the valid representations of results for comparison
+                String sumAsNumber = sumInBase + "b" + baseNum; //
+                String prodAsNumber = prodInBase + "b" + baseNum; //
+
+                // State the array of numbers for comparison
+                String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
+                int maxIndex = maxIndex(allNumbers); // Find the maximum number
+                System.out.println("Max number over " + String.join(", ", allNumbers) + " is: " + allNumbers[maxIndex]);
+                break; // when its done break the loop
+            }
         }
-
-        System.out.println(" quitting now...");scanner.close(); // Close the scanner to release resources
     }
 }
