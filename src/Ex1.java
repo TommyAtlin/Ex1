@@ -5,7 +5,7 @@ public class Ex1 {
         if (num == null || num.isEmpty()) return -1;
 
         int baseIndex = num.indexOf('b');
-        if (baseIndex == -1) return -1;
+        if (baseIndex == -1) return Integer.parseInt(num);
 
         String numberPart = num.substring(0, baseIndex);
         String basePart = num.substring(baseIndex + 1);
@@ -57,12 +57,31 @@ public class Ex1 {
 
         StringBuilder result = new StringBuilder();
         while (num > 0) {
-            int remainder = num % base;
-            char digit = (char) (remainder < 10 ? '0' + remainder : 'A' + remainder - 10);
+            int remain = num % base;
+            char digit = (char) (remain < 10 ? '0' + remain : 'A' + remain - 10);
             result.append(digit);
             num /= base;
         }
-        return result.reverse().toString() + "b" + base;
+        result.reverse();
+        String baseNumberToLetter = "";
+        if (base == 11) {
+            baseNumberToLetter = "B"; // Base 11
+        } else if (base == 12) {
+            baseNumberToLetter = "C"; // Base 12
+        } else if (base == 13) {
+            baseNumberToLetter = "D"; // Base 13
+        } else if (base == 14) {
+            baseNumberToLetter = "E"; // Base 14
+        } else if (base == 15) {
+            baseNumberToLetter = "F"; // Base 15
+        } else if (base == 16) {
+            baseNumberToLetter = "G"; // Base 16
+        } else {
+            baseNumberToLetter = Integer.toString(base); // For bases 2-10
+        }
+
+        // Append the base letter at the end
+        return result.toString() + "b" + baseNumberToLetter;
     }
 
     // Find the maximum value number from the number array

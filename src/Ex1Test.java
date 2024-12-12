@@ -40,6 +40,11 @@ public class Ex1Test {
         assertEquals(-1, Ex1.number2Int("120b1"));  // Invalid base 1
         assertEquals(-1, Ex1.number2Int("ABbI"));   // Invalid base I (out of range)
         assertEquals(-1, Ex1.number2Int("abc123b10")); // Invalid characters
+
+        // Additional Test Cases
+        assertEquals(0, Ex1.number2Int("0bA")); // Zero in base 10
+        assertEquals(-1, Ex1.number2Int("123b0")); // Invalid base 0
+        assertEquals(-1, Ex1.number2Int("123")); // Missing base indicator
     }
 
     // Additional test case for `isNumber` method
@@ -51,6 +56,11 @@ public class Ex1Test {
         assertFalse(Ex1.isNumber("202b1"));  // Invalid base (should be at least 2)
         assertFalse(Ex1.isNumber("78bH"));   // Invalid base (should be <= G)
         assertFalse(Ex1.isNumber("1abc"));   // Missing base indicator 'b'
+
+        // Additional Test Cases
+        assertFalse(Ex1.isNumber("")); // Empty string
+        assertFalse(Ex1.isNumber("   ")); // Whitespace only
+        assertFalse(Ex1.isNumber("123bx")); // Invalid base indicator
     }
 
     // Test for equality of two base-b numbers
@@ -58,6 +68,11 @@ public class Ex1Test {
     void equalsTest() {
         assertTrue(Ex1.equals("1101b2", "13bA")); // Binary 1101 (13 in decimal) = Decimal 13
         assertFalse(Ex1.equals("1011b2", "1000b2")); // Binary 1011 != Binary 1000
+
+        // Additional Test Cases
+        assertTrue(Ex1.equals("6bA", "110b2")); // Different capitalization
+        assertFalse(Ex1.equals("", "123bA")); // Empty string
+        assertFalse(Ex1.equals("12bB", "1515bT")); // One empty string
     }
 
     // Test edge case for zero and negative values
@@ -67,5 +82,23 @@ public class Ex1Test {
         assertEquals(0, Ex1.number2Int("0b4"));  // Zero in base 4
         assertEquals(0, Ex1.number2Int("0b6"));  // Zero in base 6
         assertEquals(-1, Ex1.number2Int("-1b10")); // Invalid number format
+
+        // Additional Test Cases
+        assertEquals(2, Ex1.number2Int("0010b2")); // Leading zeros
+        assertEquals(-1, Ex1.number2Int("123b0")); // Invalid base 0
+        assertEquals(-1, Ex1.number2Int("123")); // Missing base indicator
+    }
+
+    @Test
+    void zeroLeadTest() {
+        assertEquals(7, Ex1.number2Int("0012b5"));
+        assertEquals(0, Ex1.number2Int("00b2"));
+        assertEquals(23, Ex1.number2Int("0023bA"));
+    }
+    @Test
+    void manyBases() {
+        assertEquals(-1, Ex1.number2Int("123bb2"));
+        assertEquals(-1, Ex1.number2Int("AGFb3"));
+        assertEquals(-1, Ex1.number2Int("01bb5"));
     }
 }
