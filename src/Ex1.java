@@ -4,31 +4,28 @@ public class Ex1 {
     public static int number2Int(String num) {
         if (num == null || num.isEmpty()) return -1;
 
-        if (num.charAt(0) == '-') return -1;  // Reject negative numbers for now
-
         int baseIndex = num.indexOf('b');
-        if (baseIndex == -1) {
-            try {
-                return Integer.parseInt(num); // Handle as base-10 number
-            } catch (NumberFormatException e) {
-                return -1; // Invalid decimal number
-            }
-        }
+        if (baseIndex == -1) return -1;
 
         String numberPart = num.substring(0, baseIndex);
-        char basePart = num.charAt(baseIndex + 1);
-        int base = baseValidation(basePart);
-        if (numberPart.equals("0")) return 0;
-        if (base == -1) return -1;
+        String basePart = num.substring(baseIndex + 1);
+
+        if (basePart.length() != 1) return -1; // Base should be one character
+        char baseChar = basePart.charAt(0);
+        int base = baseValidation(baseChar);
+        if (base == -1) return -1; // Invalid base
+
+        if (numberPart.equals("0")) return 0; // Special case for zero
 
         int result = 0;
         for (char c : numberPart.toCharArray()) {
             int digit = digitValidation(c, base);
-            if (digit == -1) return -1;
+            if (digit == -1) return -1; // Invalid digit for the given base
             result = result * base + digit;
         }
         return result;
     }
+
 
     private static int baseValidation(char c) { // Private method for base validation
         if (c >= '2' && c <= '9') {
@@ -86,31 +83,38 @@ public class Ex1 {
     }
 
     public static boolean isNumber(String num) {
-        if (num == null || num.isEmpty()) return false;
+        if (num == null || num.isEmpty()) return false; // Check for null or empty
+
+        // Check for baseless numbers
+        if (num.equals("0") || num.equals("1")) {
+            return true; // Allow "0" and "1" as valid inputs
+        }
+
         int baseIndex = num.indexOf('b');
-        if (baseIndex == -1) return false; // The letter 'b' is missing
+        if (baseIndex == -1) return false; // Missing base indicator
 
         String numberPart = num.substring(0, baseIndex);
         String basePart = num.substring(baseIndex + 1);
 
-        // Validate the base part
-        if (basePart.length() != 1) return false;
+        // Validate base part
+        if (basePart.length() != 1) return false; // Base must be a single character
         char baseChar = basePart.charAt(0);
-        if (!(baseChar >= '2' && baseChar <= '9' || baseChar >= 'A' && baseChar <= 'G')) {
-            return false;
-        }
+        int base = baseValidation(baseChar);
+        if (base == -1) return false; // Invalid base
 
         // Validate number part
+        if (numberPart.isEmpty()) return false; // Number part cannot be empty
+
         for (char c : numberPart.toCharArray()) {
             if (!(c >= '0' && c <= '9' || c >= 'A' && c <= 'G')) {
-                return false; // Invalid character in number part
+                return false; // Invalid character
             }
+            int digit = digitValidation(c, base);
+            if (digit == -1) return false; // Invalid digit for base
         }
-
-        return true;
+        return true; // All checks passed
     }
-
-    public static boolean equals(String num1, String num2) {
-        return number2Int(num1) == number2Int(num2);
+        public static boolean equals (String num1, String num2){
+            return number2Int(num1) == number2Int(num2);
+        }
     }
-}

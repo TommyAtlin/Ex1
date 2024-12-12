@@ -46,7 +46,7 @@ public class Ex1Test {
     @Test
     void isNumberAdditionalTests() {
         assertTrue(Ex1.isNumber("202b3"));  // Valid base-3 number
-        assertTrue(Ex1.isNumber("D5bB"));  // Valid base-12 number
+        assertTrue(Ex1.isNumber("AbC"));  // Valid base-12 number
 
         assertFalse(Ex1.isNumber("202b1"));  // Invalid base (should be at least 2)
         assertFalse(Ex1.isNumber("78bH"));   // Invalid base (should be <= G)
