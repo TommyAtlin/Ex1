@@ -1,29 +1,35 @@
-
 public class Ex1 {
 
     // Convert the given number
     public static int number2Int(String num) {
         if (num == null || num.isEmpty()) return -1;
 
+        if (num.charAt(0) == '-') return -1;  // Reject negative numbers for now
+
         int baseIndex = num.indexOf('b');
-        if (baseIndex == -1) return Integer.parseInt(num);
+        if (baseIndex == -1) {
+            try {
+                return Integer.parseInt(num); // Handle as base-10 number
+            } catch (NumberFormatException e) {
+                return -1; // Invalid decimal number
+            }
+        }
 
         String numberPart = num.substring(0, baseIndex);
         char basePart = num.charAt(baseIndex + 1);
-
         int base = baseValidation(basePart);
         if (base == -1) return -1;
 
         int result = 0;
         for (char c : numberPart.toCharArray()) {
-            int digit = digetValidation(c, base);
-            if (digit == -1) return -1; // invalid digit
+            int digit = digitValidation(c, base);
+            if (digit == -1) return -1;
             result = result * base + digit;
         }
         return result;
     }
 
-    private static int baseValidation(char c) {    // private method for base validation
+    private static int baseValidation(char c) { // Private method for base validation
         if (c >= '2' && c <= '9') {
             return c - '0';
         } else if (c >= 'A' && c <= 'G') {
@@ -33,11 +39,13 @@ public class Ex1 {
         }
     }
 
-    private static int digetValidation(char c, int base) {    // private method for digit validation
+    private static int digitValidation(char c, int base) { // Private method for digit validation
         if (c >= '0' && c <= '9') {
-            return c - '0';
+            int digit = c - '0';
+            return digit < base ? digit : -1;
         } else if (c >= 'A' && c <= 'G') {
-            return c - 'A' + 10;
+            int digit = c - 'A' + 10;
+            return digit < base ? digit : -1;
         } else {
             return -1;
         }
@@ -45,23 +53,21 @@ public class Ex1 {
 
     public static String int2Number(int num, int base) {
         if (num < 0 || base < 2 || base > 16) {
-            System.out.println("Invalid input: number must be non-negative and base must be between 2 and 16");
+            throw new IllegalArgumentException("Invalid input: number must be non-negative and base must be between 2 and 16");
         }
+        if (num == 0) return "0b" + base;
 
-        StringBuilder result = new StringBuilder(); // for number storage
+        StringBuilder result = new StringBuilder();
         while (num > 0) {
             int remainder = num % base;
-            char digit = (char) ('0' + remainder);
-            if (remainder >= 10) {
-                digit = (char) ('A' + remainder - 10);
-            }
-            result.insert(0, digit);
+            char digit = (char) (remainder < 10 ? '0' + remainder : 'A' + remainder - 10);
+            result.append(digit);
             num /= base;
         }
-        return result.toString() + "b" + base;
+        return result.reverse().toString() + "b" + base;
     }
 
-    // Find the maximum value number from the number Array
+    // Find the maximum value number from the number array
     public static int maxIndex(String[] arr) {
         int maxIndex = -1; // Start with invalid index
         int maxValue = Integer.MIN_VALUE; // Initialize maximum value
@@ -81,14 +87,18 @@ public class Ex1 {
     public static boolean isNumber(String num) {
         if (num == null || num.isEmpty()) return false;
         int baseIndex = num.indexOf('b');
-        if (baseIndex == -1) return false; // the letter 'b' is missing
+        if (baseIndex == -1) return false; // The letter 'b' is missing
+
         String numberPart = num.substring(0, baseIndex);
         String basePart = num.substring(baseIndex + 1);
 
         // Validate the base part
-        if (basePart.length() != 1 || (basePart.charAt(0) < '2' || (basePart.charAt(0) > '9' && basePart.charAt(0) < 'A') || basePart.charAt(0) > 'G')) {
+        if (basePart.length() != 1) return false;
+        char baseChar = basePart.charAt(0);
+        if (!(baseChar >= '2' && baseChar <= '9' || baseChar >= 'A' && baseChar <= 'G')) {
             return false;
         }
+
         // Validate number part
         for (char c : numberPart.toCharArray()) {
             if (!(c >= '0' && c <= '9' || c >= 'A' && c <= 'G')) {
