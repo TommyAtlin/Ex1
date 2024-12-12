@@ -18,6 +18,7 @@ public class Ex1 {
         String numberPart = num.substring(0, baseIndex);
         char basePart = num.charAt(baseIndex + 1);
         int base = baseValidation(basePart);
+        if (numberPart.equals("0")) return 0;
         if (base == -1) return -1;
 
         int result = 0;
