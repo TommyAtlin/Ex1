@@ -8,7 +8,7 @@ public class Ex1Main {
             System.out.print("Enter a string as number#1 (or \"quit\" to end the program): ");
             String num1 = scanner.nextLine();
             if (num1.equals("quit")) {
-                System.out.println("quitting now...");
+                System.out.println("Quitting now...");
                 break; // Exit loop if user types 'quit'
             }
 
@@ -24,7 +24,7 @@ public class Ex1Main {
             System.out.print("Enter a string as number#2 (or \"quit\" to end the program): ");
             String num2 = scanner.nextLine();
             if (num2.equals("quit")) {
-                System.out.println("quitting now...");
+                System.out.println("Quitting now...");
                 break; // Exit loop if user types 'quit'
             }
 
@@ -36,12 +36,6 @@ public class Ex1Main {
                 continue; // Restart loop if invalid
             }
             System.out.println("num2 = " + num2 + " is valid with value: " + num2Value);
-
-            // Exit if either of the numbers is invalid
-            if (num1Value == -1 || num2Value == -1) {
-                System.out.println("One or both numbers are invalid. Please check the format.");
-                continue; // Restart loop if either is invalid
-            }
 
             // Ask the user for a base value
             int baseNum = 0; // Declare baseNum outside the loop
@@ -64,26 +58,22 @@ public class Ex1Main {
                 }
             }
 
-// Convert sum and product to the chosen base after validation loop
+            // Convert sum and product to the chosen base after validation loop
             String sumInBase = Ex1.int2Number(num1Value + num2Value, baseNum);
             String prodInBase = Ex1.int2Number(num1Value * num2Value, baseNum);
 
-
-// Create valid representations of results for comparison
-            String sumAsNumber = sumInBase + "b" + baseNum;
-            String prodAsNumber = prodInBase + "b" + baseNum;
-
             // Display the sum and product
-            System.out.println(num1 + " + " + num2 + " = " + sumAsNumber);
-            System.out.println(num1 + " * " + num2 + " = " + prodAsNumber);
+            System.out.println(num1 + " + " + num2 + " = " + sumInBase);
+            System.out.println(num1 + " * " + num2 + " = " + prodInBase);
 
-// State the array of numbers for comparison
-            String[] allNumbers = {num1, num2, sumAsNumber, prodAsNumber};
+            // State the array of numbers for comparison
+            String[] allNumbers = {num1, num2, sumInBase, prodInBase};
             int maxIndex = Ex1.maxIndex(allNumbers); // Find the maximum number
             System.out.println("Max number over " + String.join(", ", allNumbers) + " is: " + allNumbers[maxIndex]);
 
-
             break; // Exit after the base conversion and comparison
         }
+
+        scanner.close(); // Close the scanner
     }
 }
