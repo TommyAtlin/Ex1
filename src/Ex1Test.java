@@ -30,42 +30,72 @@ public class Ex1Test {
         }
     }
     @Test
-    void number2IntAdditionalTests() {
-        // Valid inputs for base 3 to 16
-        assertEquals(20, Ex1.number2Int("202b3"));  // Base-3 "202b3" = 20 in decimal
-        assertEquals(500, Ex1.number2Int("1F4bG")); // Hexadecimal "1F4b16" = 500
-        assertEquals(121, Ex1.number2Int("321b6"));  // Base-6 "321b6" = 102 in decimal
-
-        // Invalid base and format cases
-        assertEquals(-1, Ex1.number2Int("120b1"));  // Invalid base 1
-        assertEquals(-1, Ex1.number2Int("ABbI"));   // Invalid base I (out of range)
-        assertEquals(-1, Ex1.number2Int("abc123b10")); // Invalid characters
+    void int2NumberTests() { // Tests for int2Number Method
+        assertEquals("20bA", Ex1.int2Number(20, 10));  //
+        assertEquals("500bA", Ex1.int2Number(500, 10)); //
+        assertEquals("121bA", Ex1.int2Number(121, 10)); //
+        assertEquals("0b2", Ex1.int2Number(0, 2));
+        assertEquals("FbG", Ex1.int2Number(15, 16));
+        assertEquals("FFbG", Ex1.int2Number(255, 16));
+        assertEquals("7b8", Ex1.int2Number(7, 8));
+        assertEquals("10b2", Ex1.int2Number(2, 2));
     }
 
-    // Additional test case for `isNumber` method
     @Test
-    void isNumberAdditionalTests() {
-        assertTrue(Ex1.isNumber("202b3"));  // Valid base-3 number
-        assertTrue(Ex1.isNumber("D5bB"));  // Valid base-12 number
-
-        assertFalse(Ex1.isNumber("202b1"));  // Invalid base (should be at least 2)
-        assertFalse(Ex1.isNumber("78bH"));   // Invalid base (should be <= G)
-        assertFalse(Ex1.isNumber("1abc"));   // Missing base indicator 'b'
+    void int2Number() { //Tests for number2Int Method
+        assertEquals(20, Ex1.number2Int("202b3"));
+        assertEquals(500, Ex1.number2Int("1F4bG"));
+        assertEquals(121, Ex1.number2Int("321b6"));
+        assertEquals(-1, Ex1.number2Int("120b1"));
+        assertEquals(-1, Ex1.number2Int("ABbI"));
+        assertEquals(-1, Ex1.number2Int("abc123b10"));
+        assertEquals(0, Ex1.number2Int("0bA"));
+        assertEquals(-1, Ex1.number2Int("123b0"));
+        assertEquals(123, Ex1.number2Int("123"));
     }
 
-    // Test for equality of two base-b numbers
     @Test
-    void equalsTest() {
-        assertTrue(Ex1.equals("1101b2", "13bA")); // Binary 1101 (13 in decimal) = Decimal 13
-        assertFalse(Ex1.equals("1011b2", "1000b2")); // Binary 1011 != Binary 1000
+    void isNumberTest() { // Tests for isNumber method
+        assertTrue(Ex1.isNumber("202b3"));
+        assertTrue(Ex1.isNumber("AbC"));
+        assertFalse(Ex1.isNumber("202b1"));
+        assertFalse(Ex1.isNumber("78bH"));
+        assertFalse(Ex1.isNumber("1abc"));
+        assertFalse(Ex1.isNumber(""));
+        assertFalse(Ex1.isNumber("   "));
+        assertFalse(Ex1.isNumber("123bx"));
     }
 
-    // Test edge case for zero and negative values
     @Test
-    void edgeCasesTest() {
-        assertEquals(0, Ex1.number2Int("0b3"));   // Zero in base 3
-        assertEquals(0, Ex1.number2Int("0b4"));  // Zero in base 4
-        assertEquals(0, Ex1.number2Int("0b6"));  // Zero in base 6
-        assertEquals(-1, Ex1.number2Int("-1b10")); // Invalid number format
+    void equalsTest() { // Tests  for equals method
+        assertTrue(Ex1.equals("1101b2", "13bA"));
+        assertFalse(Ex1.equals("1011b2", "1000b2"));
+        assertTrue(Ex1.equals("6bA", "110b2"));
+        assertFalse(Ex1.equals("", "123bA"));
+        assertFalse(Ex1.equals("12bB", "1515bT"));
+    }
+
+    @Test
+    void negetiveCasesTest() { // Test negative representation of numbers
+        assertEquals(-1, Ex1.number2Int("-1b10"));
+    }
+    @Test
+    void zeroBaseTest() {  // Test zero base invalid format
+        assertEquals(-1, Ex1.number2Int("0010b0"));
+        assertEquals(-1, Ex1.number2Int("123b0"));
+        assertEquals(-1, Ex1.number2Int("AGDb0"));
+    }
+
+    @Test
+    void zeroLeadTest() { // Test for number of zeros at the start
+        assertEquals(7, Ex1.number2Int("0012b5"));
+        assertEquals(0, Ex1.number2Int("000b2"));
+        assertEquals(23, Ex1.number2Int("000023bA"));
+    }
+    @Test
+    void manyBases() { // Test for invalid representation of base (number wise)
+        assertEquals(-1, Ex1.number2Int("123bb2"));
+        assertEquals(-1, Ex1.number2Int("AGFbbb3"));
+        assertEquals(-1, Ex1.number2Int("01bbbb5"));
     }
 }
