@@ -8,7 +8,6 @@ public class Ex1Test {
         String s2 = "1011b2";
         int v = Ex1.number2Int(s2);
         assertEquals(v, 11);
- Ex1
         String s10 = "1011bA";
         v = Ex1.number2Int(s10);
         s2 = Ex1.int2Number(v, 2);
